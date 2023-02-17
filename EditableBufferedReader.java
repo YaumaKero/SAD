@@ -4,25 +4,28 @@ import jline.Terminal;
 
 public class EditableBufferedReader extends BufferedRead {
 
-    private Terminal terminal;
+    private Console console;
     String str = null;
     
-    public EditableBufferedReader(){
-        terminal = Terminal.setupTerminal();
-        try{
-            terminal.init();
-        }catch(Expetion e){
-            e.printStackTrace();
-        }
-        terminal.setEchoEnabled(false);
-    }
+    //Opcion 1---------------------
     public void setRaw(){
-        terminal.setRawMode();
+        console.setRawMode(true);
+        console.setEchoEnabled(false);
     }
     public void unsetRaw(){
         terminal.setEchoEnabled(true);
         terminal.setCookedMode();
     }
+    //Opcion 2-----------------
+    public void setRaw(){
+        String[] cmd = {"/bin/sh", "-c", "stty raw </dev/tty"};
+        Runtime.getRuntime().exec(cmd);
+    }
+    public void unsetRaw(){
+        String[] cmd = {"/bin/sh", "-c", "stty cooked </dev/tty"};
+        Runtime.getRuntime().exec(cmd);     
+    }
+    
     public void read(){
         Scanner scanner = new Scanner(System.in);
         char character = scanner.next().charAt(0);
