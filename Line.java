@@ -1,6 +1,6 @@
 import java.io.*;
 
-class Line(){
+public class Line{
     
     String text;
     int cursorPos;
@@ -8,9 +8,9 @@ class Line(){
     boolean INSERTION=true;
     boolean SUBSTITUTION=false;
     
-    Line(text,cursorPos,editMode){
-        text="";
-        cursorPos=0;
-        editMode=INSERTION;
+    Line(String text, int cursorPos, boolean editMode){
+        this.text = "";
+        this.cursorPos = 0;
+        this.editMode = INSERTION;
     }
 }
