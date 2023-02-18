@@ -34,33 +34,33 @@ public class EditableBufferedReader extends BufferedRead {
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         Line line = new Line();
         char x;
-        while(line.text.charAt(line.cursorPos)=='\n'){
+        while(line.text.charAt(line.cursorPos)=='\n'){  //(J) no seria != ?
             x=(char)in.read();
             switch(x){
                 case '\n':
                     break;
                 
-                case 27:
-                    in.read();
-                    x=(char)in.read();
-                    if(x==68)
-                        line.cursorPos--;
-                    else if(x==67)
+                case 27:    //ESC
+                    in.read(); //skipeamos el [
+                    x=(char)in.read();  //leemos el siguiente
+                    if(x==68)  //D    izquierda
+                        line.cursorPos--; 
+                    else if(x==67) //C  derecha
                         line.cursorPos++;
-                    else if(x==72)
+                    else if(x==72) //H  home
                         line.cursorPos=0;
-                    else if(x==70)
+                    else if(x==70) //F  fin
                         line.cursorPos=line.text.length();
-                    else if(x==50){                              //puede dar problemas pq hay un caracter mas que en las otras teclas
+                    else if(x==50){    //2  Insert            //puede dar problemas pq hay un caracter mas que en las otras teclas
                         line.editMode=!line.editMode;
-                        in.read();                               //esto debería arreglarlo
+                        in.read();                            //esto debería arreglarlo
                     }
                     break;
                 
                 
                 default:
                     if(line.editMode==line.SUBSTITUTION){
-                        StringBuilder sb = new StringBuilder(line.text);
+                        StringBuilder sb = new StringBuilder(line.text); //(J)podemos usar el meodo replace de StringBuilder
                         sb.setCharAt(line.cursorPos, x);
                         line.text=sb.toString();
                     }
