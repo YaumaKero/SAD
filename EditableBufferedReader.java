@@ -1,11 +1,14 @@
 import java.io.*;
-import jline.Terminal;
 
 
-public class EditableBufferedReader extends BufferedRead {
+
+public class EditableBufferedReader extends BufferedReader {
 
     private Console console;
     String str = null;
+    EditableBufferedReader(InputStreamReader in){
+       super(in);      
+    }
     
     //Opcion 1---------------------
     public void setRaw(){
@@ -40,18 +43,18 @@ public class EditableBufferedReader extends BufferedRead {
                 case '\n':
                     break;
                 
-                case 27:    //ESC
-                    in.read(); //skipeamos el [
-                    x=(char)in.read();  //leemos el siguiente
-                    if(x==68)  //D    izquierda
+                case 27:                        //ESC
+                    in.read();                  //skipeamos el [
+                    x=(char)in.read();          //leemos el siguiente
+                    if(x==68)                   //D    izquierda
                         line.cursorPos--; 
-                    else if(x==67) //C  derecha
+                    else if(x==67)              //C  derecha
                         line.cursorPos++;
-                    else if(x==72) //H  home
+                    else if(x==72)              //H  home
                         line.cursorPos=0;
-                    else if(x==70) //F  fin
+                    else if(x==70)              //F  fin
                         line.cursorPos=line.text.length();
-                    else if(x==50){    //2  Insert            //puede dar problemas pq hay un caracter mas que en las otras teclas
+                    else if(x==50){             //2  Insert            //puede dar problemas pq hay un caracter mas que en las otras teclas
                         line.editMode=!line.editMode;
                         in.read();                            //esto debería arreglarlo
                     }
