@@ -8,7 +8,7 @@ public class Line{
     boolean INSERTION=true;
     boolean SUBSTITUTION=false;
     
-    Line(String text, int cursorPos, boolean editMode){
+    Line(){
         this.text = "";
         this.cursorPos = 0;
         this.editMode = INSERTION;
