@@ -1,69 +1,68 @@
 import java.io.*;
-
+import java.util.*;
 
 
 public class EditableBufferedReader extends BufferedReader {
 
-    private Console console;
     String str = null;
+    Runtime runtime = Runtime.getRuntime();
     EditableBufferedReader(InputStreamReader in){
        super(in);      
     }
     
-    //Opcion 1---------------------
     public void setRaw(){
-        console.setRawMode(true);
-        console.setEchoEnabled(false);
+        String[] cmd = {"/bin/sh", "-c", "stty raw </dev/tty"};  //talvez es otro  comando pero la estructura esta bien
+        try{
+            runtime.exec(cmd);
+        } catch (IOException e) { 
+            e.printStackTrace(); 
+        }        
     }
     public void unsetRaw(){
-        terminal.setEchoEnabled(true);
-        terminal.setCookedMode();
-    }
-    //Opcion 2-----------------
-    public void setRaw(){
-        String[] cmd = {"/bin/sh", "-c", "stty raw </dev/tty"};
-        Runtime.getRuntime().exec(cmd);
-    }
-    public void unsetRaw(){
-        String[] cmd = {"/bin/sh", "-c", "stty cooked </dev/tty"};
-        Runtime.getRuntime().exec(cmd);     
-    }
-    
-    public void read(){
-        Scanner scanner = new Scanner(System.in);
-        char character = scanner.next().charAt(0);
-    }
-    public void readLine(){
+        String[] cmd = {"/bin/sh", "-c", "stty cooked </dev/tty"}; //talvez es otro  comando pero la estructura esta bien
+        try{
+            runtime.exec(cmd);
+        } catch (IOException e) { 
+            e.printStackTrace(); 
+        }     
+    }    
+    // Por ahora no hace falta modificar read()
+
+    // public char read(){  
+    //     Scanner scanner = new Scanner(System.in);
+    //     char character = scanner.next().charAt(0);
+    // }
+    public String readLine(){
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         Line line = new Line();
         char x;
-        while(line.text.charAt(line.cursorPos)=='\n'){  //(J) no seria != ?
-            x=(char)in.read();
+        while(line.text.charAt(line.cursorPos)=='\n'){
+            try{
+                x=(char)in.read();
             switch(x){
                 case '\n':
                     break;
                 
-                case 27:                        //ESC
-                    in.read();                  //skipeamos el [
-                    x=(char)in.read();          //leemos el siguiente
-                    if(x==68)                   //D    izquierda
-                        line.cursorPos--; 
-                    else if(x==67)              //C  derecha
+                case 27:
+                    in.read();
+                    x=(char)in.read();
+                    if(x==68)
+                        line.cursorPos--;
+                    else if(x==67)
                         line.cursorPos++;
-                    else if(x==72)              //H  home
+                    else if(x==72)
                         line.cursorPos=0;
-                    else if(x==70)              //F  fin
+                    else if(x==70)
                         line.cursorPos=line.text.length();
-                    else if(x==50){             //2  Insert            //puede dar problemas pq hay un caracter mas que en las otras teclas
+                    else if(x==50){                              //puede dar problemas pq hay un caracter mas que en las otras teclas
                         line.editMode=!line.editMode;
-                        in.read();                            //esto debería arreglarlo
+                        in.read();                               //esto debería arreglarlo
                     }
-                    break;
-                
+                    break;                
                 
                 default:
                     if(line.editMode==line.SUBSTITUTION){
-                        StringBuilder sb = new StringBuilder(line.text); //(J)podemos usar el meodo replace de StringBuilder
+                        StringBuilder sb = new StringBuilder(line.text);
                         sb.setCharAt(line.cursorPos, x);
                         line.text=sb.toString();
                     }
@@ -71,12 +70,12 @@ public class EditableBufferedReader extends BufferedReader {
                         StringBuilder stringBuilder= new StringBuilder(line.text);
                         stringBuilder.insert(line.cursorPos,x);
                         line.text=stringBuilder.toString();
-                    }
-            
+                    }            
                     line.cursorPos++;
-            }
-        
+            }                
+            }catch (IOException e) { e.printStackTrace(); }                      
         }
+        return null;
     }  
 }
 
