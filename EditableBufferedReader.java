@@ -35,38 +35,53 @@ public class EditableBufferedReader extends BufferedReader {
     public String readLine(){
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         Line line = new Line();
+        this.setRaw();
         char x;
-        while(line.text.charAt(line.cursorPos)=='\n'){
+        boolean exit = false;
+        System.out.println("modo de escritura: "+ line.insertionMode);
+        while(exit==false){
             try{
                 x=(char)in.read();
+                //int asciival = x;
+                //System.out.println(asciival);
             switch(x){
-                case '\n':
+                case 13://valor del enter
+                        exit=true;
                     break;
                 
                 case 27:
                     in.read();
                     x=(char)in.read();
-                    if(x==68)
+                    if(x==68){
+                        System.out.print("\b\b");
                         line.cursorPos--;
-                    else if(x==67)
+                    }
+                    else if(x==67){
+                        System.out.print("\b\b");
                         line.cursorPos++;
-                    else if(x==72)
+                    }
+                    else if(x==72){
+                        System.out.print("\b\b");
                         line.cursorPos=0;
-                    else if(x==70)
+                    }
+                    else if(x==70){
+                        System.out.print("\b\b");
                         line.cursorPos=line.text.length();
+                    }
                     else if(x==50){                              //puede dar problemas pq hay un caracter mas que en las otras teclas
-                        line.editMode=!line.editMode;
-                        in.read();                               //esto debería arreglarlo
+                        line.insertionMode=!line.insertionMode;
+                        in.read();  
+                        System.out.print("\b\b");                             //esto debería arreglarlo
                     }
                     break;                
                 
                 default:
-                    if(line.editMode==line.SUBSTITUTION){
+                    if(line.insertionMode == false){
                         StringBuilder sb = new StringBuilder(line.text);
                         sb.setCharAt(line.cursorPos, x);
                         line.text=sb.toString();
                     }
-                    else if(line.editMode==line.INSERTION){
+                    else if(line.insertionMode == true){
                         StringBuilder stringBuilder= new StringBuilder(line.text);
                         stringBuilder.insert(line.cursorPos,x);
                         line.text=stringBuilder.toString();
@@ -75,15 +90,7 @@ public class EditableBufferedReader extends BufferedReader {
             }                
             }catch (IOException e) { e.printStackTrace(); }                      
         }
+        this.unsetRaw();
         return null;
     }  
 }
-
-
--------------------------------------------------------------------------------------
-
-
-
-
-
-
