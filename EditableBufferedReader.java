@@ -35,7 +35,7 @@ public class EditableBufferedReader extends BufferedReader {
     public String readLine(){
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         Line line = new Line();
-        this.setRaw();
+        setRaw();
         char x;
         boolean exit = false;
         System.out.println("modo de escritura: "+ line.insertionMode);
@@ -46,32 +46,42 @@ public class EditableBufferedReader extends BufferedReader {
                 //System.out.println(asciival);
             switch(x){
                 case 13://valor del enter
-                        exit=true;
+                    System.out.print("\b \b\b \b");
+                    exit=true;
                     break;
                 
+                case 127://valor del backspace
+                    System.out.print("\b \b\b \b\b \b");
+                    StringBuilder MyString = new StringBuilder(line.text);
+                    MyString = MyString.deleteCharAt(line.cursorPos-1);
+                    line.cursorPos--;
+                    line.text=MyString.toString();
+                    break;
+
                 case 27:
                     in.read();
                     x=(char)in.read();
                     if(x==68){
-                        System.out.print("\b\b");
+                        System.out.print("\b \b\b \b\b \b\b \b");
+                        for(int i=line.cursorPos;i)
                         line.cursorPos--;
                     }
                     else if(x==67){
-                        System.out.print("\b\b");
+                        System.out.print("\b \b\b \b\b \b\b \b");
                         line.cursorPos++;
                     }
                     else if(x==72){
-                        System.out.print("\b\b");
+                        System.out.print("\b \b\b \b\b \b\b \b");
                         line.cursorPos=0;
                     }
                     else if(x==70){
-                        System.out.print("\b\b");
+                        System.out.print("\b \b\b \b\b \b\b \b");
                         line.cursorPos=line.text.length();
                     }
                     else if(x==50){                              //puede dar problemas pq hay un caracter mas que en las otras teclas
                         line.insertionMode=!line.insertionMode;
                         in.read();  
-                        System.out.print("\b\b");                             //esto debería arreglarlo
+                        System.out.print("\b \b\b \b\b \b\b \b\b \b");                             //esto debería arreglarlo
                     }
                     break;                
                 
@@ -87,10 +97,11 @@ public class EditableBufferedReader extends BufferedReader {
                         line.text=stringBuilder.toString();
                     }            
                     line.cursorPos++;
-            }                
+            }
+            //System.out.println(line.text+line.cursorPos);                
             }catch (IOException e) { e.printStackTrace(); }                      
         }
         this.unsetRaw();
-        return null;
+        return line.text;
     }  
 }
