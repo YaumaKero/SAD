@@ -51,20 +51,23 @@ public class EditableBufferedReader extends BufferedReader {
                     break;
                 
                 case 127://valor del backspace
+                    if(line.cursorPos==0){
+                        System.out.print("\b \b\b \b");
+                        for(int i=0;i<line.text.length();i++)
+                            System.out.print(line.text.charAt(i));
+                        for(int i=0;i<line.text.length();i++)
+                            System.out.print("\b");
+                        break;
+                    }
                     System.out.print("\b \b\b \b\b \b");
                     StringBuilder MyString = new StringBuilder(line.text);
-                    if(line.cursorPos!=0)
-                            MyString = MyString.deleteCharAt(line.cursorPos-1);
+                    MyString = MyString.deleteCharAt(line.cursorPos-1);
                     line.text=MyString.toString();
                     for(int i=line.cursorPos-1;i<line.text.length();i++)
-                            if(i!=0)  
-                                System.out.print(line.text.charAt(i));
+                            System.out.print(line.text.charAt(i));
                     for(int i=line.cursorPos-1;i<line.text.length();i++)
                             System.out.print("\b");
-                    if(line.cursorPos==0)
-                        break;
-                    else
-                        line.cursorPos--;
+                    line.cursorPos--;
                     break;
 
                 case 27:
@@ -81,10 +84,20 @@ public class EditableBufferedReader extends BufferedReader {
                     }
                     else if(x==67){
                         System.out.print("\b \b\b \b\b \b\b \b");
-                        line.cursorPos++;
+                        if(line.cursorPos+1<line.text.length()){
+                            for(int i=line.cursorPos;i<line.text.length();i++)
+                                System.out.print(line.text.charAt(i));
+                            for(int i=line.cursorPos+1;i<line.text.length();i++)
+                                System.out.print("\b");
+                            line.cursorPos++;
+                        }
                     }
                     else if(x==72){
                         System.out.print("\b \b\b \b\b \b\b \b");
+                        for(int i=line.cursorPos;i<line.text.length();i++)
+                            System.out.print(line.text.charAt(i));
+                        for(int i=0;i<line.text.length();i++)
+                            System.out.print("\b");
                         line.cursorPos=0;
                     }
                     else if(x==70){
