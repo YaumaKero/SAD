@@ -95,6 +95,10 @@ public class EditableBufferedReader extends BufferedReader {
                         StringBuilder stringBuilder= new StringBuilder(line.text);
                         stringBuilder.insert(line.cursorPos,x);
                         line.text=stringBuilder.toString();
+                        for(int i=line.cursorPos+1;i<line.text.length();i++)
+                            System.out.print(line.text.charAt(i));
+                        for(int i=line.cursorPos+1;i<line.text.length();i++)
+                            System.out.print("\b");
                     }            
                     line.cursorPos++;
             }
