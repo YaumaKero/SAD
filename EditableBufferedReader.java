@@ -53,9 +53,18 @@ public class EditableBufferedReader extends BufferedReader {
                 case 127://valor del backspace
                     System.out.print("\b \b\b \b\b \b");
                     StringBuilder MyString = new StringBuilder(line.text);
-                    MyString = MyString.deleteCharAt(line.cursorPos-1);
-                    line.cursorPos--;
+                    if(line.cursorPos!=0)
+                            MyString = MyString.deleteCharAt(line.cursorPos-1);
                     line.text=MyString.toString();
+                    for(int i=line.cursorPos-1;i<line.text.length();i++)
+                            if(i!=0)  
+                                System.out.print(line.text.charAt(i));
+                    for(int i=line.cursorPos-1;i<line.text.length();i++)
+                            System.out.print("\b");
+                    if(line.cursorPos==0)
+                        break;
+                    else
+                        line.cursorPos--;
                     break;
 
                 case 27:
@@ -63,7 +72,11 @@ public class EditableBufferedReader extends BufferedReader {
                     x=(char)in.read();
                     if(x==68){
                         System.out.print("\b \b\b \b\b \b\b \b");
-                        for(int i=line.cursorPos;i)
+                        for(int i=line.cursorPos;i<line.text.length();i++)
+                            System.out.print(line.text.charAt(i));
+                        for(int i=line.cursorPos;i<line.text.length();i++)
+                            System.out.print("\b");
+                        System.out.print("\b");
                         line.cursorPos--;
                     }
                     else if(x==67){
@@ -82,6 +95,10 @@ public class EditableBufferedReader extends BufferedReader {
                         line.insertionMode=!line.insertionMode;
                         in.read();  
                         System.out.print("\b \b\b \b\b \b\b \b\b \b");                             //esto debería arreglarlo
+                        for(int i=line.cursorPos+1;i<line.text.length();i++)
+                            System.out.print(line.text.charAt(i));
+                        for(int i=line.cursorPos+1;i<line.text.length();i++)
+                            System.out.print("\b");
                     }
                     break;                
                 
