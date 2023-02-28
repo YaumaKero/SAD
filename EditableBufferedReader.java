@@ -38,7 +38,7 @@ public class EditableBufferedReader extends BufferedReader {
         setRaw();
         char x;
         boolean exit = false;
-        System.out.println("modo de escritura: "+ line.insertionMode);
+        //System.out.println("modo de escritura: "+ line.insertionMode);
         while(exit==false){
             try{
                 x=(char)in.read();
@@ -74,6 +74,14 @@ public class EditableBufferedReader extends BufferedReader {
                     in.read();
                     x=(char)in.read();
                     if(x==68){
+                        if(line.cursorPos==0){
+                            System.out.print("\b \b\b \b\b \b\b \b");
+                            for(int i=0;i<line.text.length();i++)
+                                System.out.print(line.text.charAt(i));
+                            for(int i=0;i<line.text.length();i++)
+                                System.out.print("\b");
+                            break;
+                        }
                         System.out.print("\b \b\b \b\b \b\b \b");
                         for(int i=line.cursorPos;i<line.text.length();i++)
                             System.out.print(line.text.charAt(i));
@@ -84,12 +92,23 @@ public class EditableBufferedReader extends BufferedReader {
                     }
                     else if(x==67){
                         System.out.print("\b \b\b \b\b \b\b \b");
-                        if(line.cursorPos+1<line.text.length()){
-                            for(int i=line.cursorPos;i<line.text.length();i++)
-                                System.out.print(line.text.charAt(i));
-                            for(int i=line.cursorPos+1;i<line.text.length();i++)
-                                System.out.print("\b");
-                            line.cursorPos++;
+                        if(line.insertionMode){
+                            if(line.cursorPos+1<line.text.length()){
+                                for(int i=line.cursorPos;i<line.text.length();i++)
+                                    System.out.print(line.text.charAt(i));
+                                for(int i=line.cursorPos+1;i<line.text.length();i++)
+                                    System.out.print("\b");
+                                line.cursorPos++;
+                            }
+                        }
+                        else{
+                            if(line.cursorPos<line.text.length()){
+                                for(int i=line.cursorPos;i<line.text.length();i++)
+                                    System.out.print(line.text.charAt(i));
+                                for(int i=line.cursorPos+1;i<line.text.length();i++)
+                                    System.out.print("\b");
+                                line.cursorPos++;
+                            }
                         }
                     }
                     else if(x==72){
@@ -102,24 +121,31 @@ public class EditableBufferedReader extends BufferedReader {
                     }
                     else if(x==70){
                         System.out.print("\b \b\b \b\b \b\b \b");
-                        line.cursorPos=line.text.length();
+                        for(int i=line.cursorPos;i<line.text.length()-1;i++)
+                                System.out.print(line.text.charAt(i));
+                        line.cursorPos=line.text.length()-1;
                     }
                     else if(x==50){                              //puede dar problemas pq hay un caracter mas que en las otras teclas
                         line.insertionMode=!line.insertionMode;
                         in.read();  
                         System.out.print("\b \b\b \b\b \b\b \b\b \b");                             //esto debería arreglarlo
-                        for(int i=line.cursorPos+1;i<line.text.length();i++)
+                        for(int i=line.cursorPos;i<line.text.length();i++)
                             System.out.print(line.text.charAt(i));
-                        for(int i=line.cursorPos+1;i<line.text.length();i++)
+                        for(int i=line.cursorPos;i<line.text.length();i++)
                             System.out.print("\b");
                     }
                     break;                
                 
                 default:
                     if(line.insertionMode == false){
-                        StringBuilder sb = new StringBuilder(line.text);
-                        sb.setCharAt(line.cursorPos, x);
-                        line.text=sb.toString();
+                        if(line.cursorPos==line.text.length()){
+                            line.text=line.text+x;
+                        }
+                        else{
+                            StringBuilder sb = new StringBuilder(line.text);
+                            sb.setCharAt(line.cursorPos, x);
+                            line.text=sb.toString();
+                        }
                     }
                     else if(line.insertionMode == true){
                         StringBuilder stringBuilder= new StringBuilder(line.text);
