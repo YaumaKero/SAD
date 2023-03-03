@@ -134,6 +134,34 @@ public class EditableBufferedReader extends BufferedReader {
                         for(int i=line.cursorPos;i<line.text.length();i++)
                             System.out.print("\b");
                     }
+                    else if(x==51){                       
+                        in.read();  
+                        System.out.print("\b \b\b \b\b \b\b \b\b \b");
+                        StringBuilder sb = new StringBuilder(line.text);
+                        /*if(!line.insertionMode){
+                            line.insertionMode=!line.insertionMode;
+                            boolean cambio = true;
+                        }*/
+                        if(line.cursorPos+1<line.text.length()){
+                            sb.deleteCharAt(line.cursorPos);
+                            line.text=sb.toString();
+                            for(int i=line.cursorPos;i<line.text.length();i++)
+                                System.out.print(line.text.charAt(i));
+                            for(int i=line.cursorPos;i<line.text.length();i++)
+                                System.out.print("\b");
+                        }
+                        /*if(cambio){
+
+                        }
+                        else{
+                            if(line.cursorPos<line.text.length()){
+                                for(int i=line.cursorPos;i<line.text.length()-1;i++)
+                                    System.out.print(line.text.charAt(i+1));
+                                for(int i=line.cursorPos;i<line.text.length();i++)
+                                    System.out.print("\b");
+                            }
+                        }*/
+                    }
                     break;                
                 
                 default:
