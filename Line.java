@@ -4,13 +4,11 @@ public class Line{
     
     String text;
     int cursorPos;
-    boolean editMode;
-    boolean INSERTION=true;
-    boolean SUBSTITUTION=false;
+    boolean insertionMode;
     
     Line(){
-        this.text = "";
+        this.text = " ";
         this.cursorPos = 0;
-        this.editMode = INSERTION;
+        this.insertionMode = true;
     }
 }
