@@ -1,6 +1,4 @@
 import java.io.*;
-import java.util.*;
-
 
 public class EditableBufferedReader extends BufferedReader {
 
@@ -11,7 +9,7 @@ public class EditableBufferedReader extends BufferedReader {
     }
     
     public void setRaw(){
-        String[] cmd = {"/bin/sh", "-c", "stty raw </dev/tty"};  //talvez es otro  comando pero la estructura esta bien
+        String[] cmd = {"/bin/sh", "-c", "stty raw </dev/tty"};  
         try{
             runtime.exec(cmd);
         } catch (IOException e) { 
@@ -19,31 +17,23 @@ public class EditableBufferedReader extends BufferedReader {
         }        
     }
     public void unsetRaw(){
-        String[] cmd = {"/bin/sh", "-c", "stty cooked </dev/tty"}; //talvez es otro  comando pero la estructura esta bien
+        String[] cmd = {"/bin/sh", "-c", "stty cooked </dev/tty"}; 
         try{
             runtime.exec(cmd);
         } catch (IOException e) { 
             e.printStackTrace(); 
         }     
-    }    
-    // Por ahora no hace falta modificar read()
-
-    // public char read(){  
-    //     Scanner scanner = new Scanner(System.in);
-    //     char character = scanner.next().charAt(0);
-    // }
+    } 
+    
     public String readLine(){
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         Line line = new Line();
         setRaw();
         char x;
         boolean exit = false;
-        //System.out.println("modo de escritura: "+ line.insertionMode);
         while(exit==false){
             try{
                 x=(char)in.read();
-                //int asciival = x;
-                //System.out.println(asciival);
             switch(x){
                 case 13://valor del enter
                     System.out.print("\b \b\b \b");
@@ -125,10 +115,10 @@ public class EditableBufferedReader extends BufferedReader {
                                 System.out.print(line.text.charAt(i));
                         line.cursorPos=line.text.length()-1;
                     }
-                    else if(x==50){                              //puede dar problemas pq hay un caracter mas que en las otras teclas
+                    else if(x==50){ 
                         line.insertionMode=!line.insertionMode;
                         in.read();  
-                        System.out.print("\b \b\b \b\b \b\b \b\b \b");                             //esto debería arreglarlo
+                        System.out.print("\b \b\b \b\b \b\b \b\b \b"); 
                         for(int i=line.cursorPos;i<line.text.length();i++)
                             System.out.print(line.text.charAt(i));
                         for(int i=line.cursorPos;i<line.text.length();i++)
@@ -138,10 +128,6 @@ public class EditableBufferedReader extends BufferedReader {
                         in.read();  
                         System.out.print("\b \b\b \b\b \b\b \b\b \b");
                         StringBuilder sb = new StringBuilder(line.text);
-                        /*if(!line.insertionMode){
-                            line.insertionMode=!line.insertionMode;
-                            boolean cambio = true;
-                        }*/
                         if(line.cursorPos+1<line.text.length()){
                             sb.deleteCharAt(line.cursorPos);
                             line.text=sb.toString();
@@ -150,17 +136,6 @@ public class EditableBufferedReader extends BufferedReader {
                             for(int i=line.cursorPos;i<line.text.length();i++)
                                 System.out.print("\b");
                         }
-                        /*if(cambio){
-
-                        }
-                        else{
-                            if(line.cursorPos<line.text.length()){
-                                for(int i=line.cursorPos;i<line.text.length()-1;i++)
-                                    System.out.print(line.text.charAt(i+1));
-                                for(int i=line.cursorPos;i<line.text.length();i++)
-                                    System.out.print("\b");
-                            }
-                        }*/
                     }
                     break;                
                 
@@ -185,8 +160,7 @@ public class EditableBufferedReader extends BufferedReader {
                             System.out.print("\b");
                     }            
                     line.cursorPos++;
-            }
-            //System.out.println(line.text+line.cursorPos);                
+            }               
             }catch (IOException e) { e.printStackTrace(); }                      
         }
         this.unsetRaw();
