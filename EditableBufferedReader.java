@@ -1,8 +1,20 @@
+
+//VERSION ACTUALIZADA CON CONSTANTES
+
 import java.io.*;
 
 public class EditableBufferedReader extends BufferedReader {
 
     String str = null;
+    public static final int ESC = 27;
+    public static final int HOME = 72;
+    public static final int END = 70;
+    public static final int RIGHT = 67;
+    public static final int LEFT = 68;
+    public static final int DELETE = 51;
+    public static final int BACKSPACE = 127;
+    public static final int TOGGLE = 50;
+    public static final int RETURN = 13;
     Runtime runtime = Runtime.getRuntime();
     EditableBufferedReader(InputStreamReader in){
        super(in);      
@@ -35,12 +47,12 @@ public class EditableBufferedReader extends BufferedReader {
             try{
                 x=(char)in.read();
             switch(x){
-                case 13://valor del enter
+                case RETURN:
                     System.out.print("\b \b\b \b");
                     exit=true;
                     break;
                 
-                case 127://valor del backspace
+                case BACKSPACE:
                     if(line.cursorPos==0){
                         System.out.print("\b \b\b \b");
                         for(int i=0;i<line.text.length();i++)
@@ -60,10 +72,10 @@ public class EditableBufferedReader extends BufferedReader {
                     line.cursorPos--;
                     break;
 
-                case 27:
+                case ESC:
                     in.read();
                     x=(char)in.read();
-                    if(x==68){
+                    if(x==LEFT){
                         if(line.cursorPos==0){
                             System.out.print("\b \b\b \b\b \b\b \b");
                             for(int i=0;i<line.text.length();i++)
@@ -80,7 +92,7 @@ public class EditableBufferedReader extends BufferedReader {
                         System.out.print("\b");
                         line.cursorPos--;
                     }
-                    else if(x==67){
+                    else if(x==RIGHT){
                         System.out.print("\b \b\b \b\b \b\b \b");
                         if(line.insertionMode){
                             if(line.cursorPos+1<line.text.length()){
@@ -101,7 +113,7 @@ public class EditableBufferedReader extends BufferedReader {
                             }
                         }
                     }
-                    else if(x==72){
+                    else if(x==HOME){
                         System.out.print("\b \b\b \b\b \b\b \b");
                         for(int i=line.cursorPos;i<line.text.length();i++)
                             System.out.print(line.text.charAt(i));
@@ -109,13 +121,13 @@ public class EditableBufferedReader extends BufferedReader {
                             System.out.print("\b");
                         line.cursorPos=0;
                     }
-                    else if(x==70){
+                    else if(x==END){
                         System.out.print("\b \b\b \b\b \b\b \b");
                         for(int i=line.cursorPos;i<line.text.length()-1;i++)
                                 System.out.print(line.text.charAt(i));
                         line.cursorPos=line.text.length()-1;
                     }
-                    else if(x==50){ 
+                    else if(x==TOGGLE){ 
                         line.insertionMode=!line.insertionMode;
                         in.read();  
                         System.out.print("\b \b\b \b\b \b\b \b\b \b"); 
@@ -124,7 +136,7 @@ public class EditableBufferedReader extends BufferedReader {
                         for(int i=line.cursorPos;i<line.text.length();i++)
                             System.out.print("\b");
                     }
-                    else if(x==51){                       
+                    else if(x==DELETE){                       
                         in.read();  
                         System.out.print("\b \b\b \b\b \b\b \b\b \b");
                         StringBuilder sb = new StringBuilder(line.text);
