@@ -7,13 +7,13 @@ public class MySocket {
     private BufferedReader input;
     private PrintWriter output;
 
-    public MySocket(String host, int port) throws IOException {
+    public MySocket(String nick/* , int port*/) throws IOException {
         try {
-            this.socket = new Socket(host, port);
+            this.socket = new Socket(nick, 8080/* , port*/);
             this.input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             this.output = new PrintWriter(socket.getOutputStream(), true);
         } catch (IOException e) {
-            throw new IOException("Error al conectar con el host " + host + " en el puerto " + port, e);
+            throw new IOException("Error al conectar con el host " + nick + " en el puerto 8080", e);
         }
     }
 
@@ -53,7 +53,7 @@ public class MySocket {
 
     public int readInt() throws IOException {
         try {
-            return input.readInt();
+            return input.read();
         } catch (IOException e) {
             throw new IOException("Error al leer un entero del stream de entrada", e);
         }
@@ -61,12 +61,19 @@ public class MySocket {
 
     public void writeInt(int value) throws IOException {
         try {
-            output.writeInt(value);
+            output.write(value);
             output.flush();
         } catch (IOException e) {
             throw new IOException("Error al escribir un entero en el stream de salida", e);
         }
     }
 
+    public int rcv_message() {
+
+    }
+
+    public int snd_message() {
+
+    }
     // Implementar los métodos read/write para los tipos básicos que se necesiten
 }

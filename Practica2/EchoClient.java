@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Scanner;
 
 import javax.sound.midi.MidiSystem;
 import java.io.InputStreamReader;
@@ -8,9 +9,22 @@ import java.io.InputStreamReader;
 
 public class EchoClient{
     public static void main(String[] args) {
-        MySocket sc = new MySocket(args[0], Integer.parseInt(args[1]));
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Escribe tu nombre: ");
+        String nick = sc.nextLine();
 
-        //output
+        MySocket mysc = new MySocket(nick);
+
+        Thread receivThread = new Thread(mysc.rcv_message);
+
+        
+        
+        
+        
+        
+        /*
+        MySocket sc = new MySocket(args[0], Integer.parseInt(args[1]));
+        //input
         new Thread(){
             public void run(){
                 String line;
@@ -37,12 +51,11 @@ public class EchoClient{
                 sc.close();
             }
         }.start();
-    
+        */
             
         
     }
 }
-
 
 
 
