@@ -69,11 +69,57 @@ public class MySocket {
     }
 
     public int rcv_message() {
+        try {
+        while (true) {
+            String missatge = new BufferedReader(new InputStreamReader(sc.getInputStream())).readLine();
+            if (missatge.equals("CLOSE")) {
+                System.out.println("Conexió tancada" + "\033[0m");
+                sc.close();
+                break;
+            }
+            if (missatge.equals("USERNAME")) {
+                sc.getOutputStream().write((username + "\n").getBytes("ASCII"));
+            } else {
+                System.out.println(missatge);
+            }
+        }
+    } catch (Exception e) {
+        System.out.println(e);
+        System.out.println("\033[2;31m" + "Hi ha hagut algun error" + "\033[0m");
+        try {
+            sc.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
 
     }
 
     public int snd_message() {
-
+        try {
+        while (true) {
+            Scanner scanner = new Scanner(System.in);
+            String missatge = scanner.nextLine();
+            if (missatge.equals(bye)) {
+                System.out.println("\n\033[6;31m" + "Tancant conexió..." + "\033[0m");
+                sc.getOutputStream().write("CLOSE\n".getBytes("ASCII"));
+                scanner.close();
+                System.exit(0);
+            } else {
+                String missatge_f = "\033[1;36m" + username + ": " + "\033[3;33m" + missatge + "\033[0m";
+                sc.getOutputStream().write((missatge_f + "\n").getBytes("ASCII"));
+            }
+        }
+    } catch (Exception e) {
+        System.out.println(e);
+        System.out.println("\033[2;31m" + "Hi ha hagut algun error" + "\033[0m");
+        try {
+            sc.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }  
     }
     // Implementar los métodos read/write para los tipos básicos que se necesiten
 }
