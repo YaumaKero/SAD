@@ -1,4 +1,4 @@
-from card import Card
+from DAUMECARDS.card import Card
 from deck import Deck
 import tkinter
 
@@ -26,7 +26,13 @@ class Menu:
         except StopIteration:
             print(f"{deck.name} not found.")
     
-    def show_next_card(self, deck):
+    #funcion que muestra ventana con la primera carta para estudiar
+    def study(self, deck):
+        pass
         
+    #funcion que añade una carta al mazo
+    def addCard(self, deck):
+        pass
 
-    
+        
+        
