@@ -1,11 +1,10 @@
-from src.DAUMECARDS.deck import Deck
+import random
 
 class Card:
-    def __init__(self, front, back, tags=None, priority=1):
+    def __init__(self, front, back):
         self.front = front
         self.back = back
-        self.tags = tags if tags else []
-        self.priority = priority
+        self.priority = 1
 
     #los gets----------------------------------------------------------------   
     def get_front(self):
@@ -14,18 +13,12 @@ class Card:
     def get_back(self):
         return self.back
 
-    def get_tags(self): #probablemente lo quite
-        return self.tags
-
     #los sets----------------------------------------------------------------
     def set_front(self, new_front):
         self.front = new_front
 
     def set_back(self, new_back):
         self.back = new_back
-
-    def set_tags(self, new_tags): #probablemente lo quite
-        self.tags = new_tags
 
     #Funciones en modo Study------------------------------------------------
 

@@ -6,12 +6,13 @@ class Deck:
         self.cards = []
         self.name = name
     
-    def add_card(self, card):
-        self.cards.append(card)
+    def add_card(self, front: str, back: str):
+        if front!="" and back!="":
+            self.cards.append(Card(front,back))
     
     def remove_card(self, card):
-        if card in self.cards:
-            self.cards.remove(card)
+        #if card in self.cards:
+        self.cards.remove(card)
     
     def shuffle(self):
         random.shuffle(self.cards)
