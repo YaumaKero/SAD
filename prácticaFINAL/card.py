@@ -35,25 +35,9 @@ class Card:
     #boton Remove, elimina la carta del deck
     def remove(self):
         self.cards.remove(self)
-    #boton ShowBack
-    def show_back(self):
-        return self.back 
+   
 
-    #Funciones en modo AddCard------------------------------------------------
     
-    #entrar por tecladod el front y back
-    def add_front(self):
-        input_text = input("Write front of the card: ")
-        self.front += input_text 
-    def add_back(self):
-        input_text = input("Write back of the card: ")
-        self.back += input_text 
-    #funcion que cancela la accion de añadir carta y vuelve al menu
-    def cancel(self):
-        pass    
-    #funcion que añade la carta al deck
-    def add_card(self, deck):
-        deck.add_card(self)
         
 
     
