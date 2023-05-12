@@ -17,18 +17,6 @@ y = (altura_pantalla - 300) // 2 # La altura de la ventana es 300
 ventana.geometry(f"500x300+{x}+{y}")
 ventana.title("App Flashcards")
 
-# Crear el marco para los botones
-marco_botones = tk.Frame(ventana)
-marco_botones.pack(pady=10)
-
-# Crear los 3 botones
-boton1 = tk.Button(marco_botones, text="random", font=("Arial", 16))
-boton1.pack(side=tk.LEFT, padx=10) # Ajustar el espacio entre widgets
-boton2 = tk.Button(marco_botones, text="Order ↓", font=("Arial", 16))
-boton2.pack(side=tk.LEFT, padx=10) # Ajustar el espacio entre widgets
-boton3 = tk.Button(marco_botones, text="Order ↑", font=("Arial", 16))
-boton3.pack(side=tk.LEFT, padx=10) # Ajustar el espacio entre widgets
-
 # Crear el marco para los textos
 marco_textos = tk.Frame(ventana)
 marco_textos.pack(pady=10)
