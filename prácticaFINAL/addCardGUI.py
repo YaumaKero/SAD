@@ -1,3 +1,5 @@
+
+
 import tkinter as tk
 
 # Crear la ventana principal
@@ -21,19 +23,20 @@ marco_textos.pack(pady=40)
 
 # Crear los campos de entrada de texto
 texto1 = tk.Entry(marco_textos, font=("Arial", 16), fg='grey', bg='white')
-texto1.insert(0, "Introduzca su texto aquí")
+texto1.insert(0, "Front of the card")
 texto1.pack(pady=10) # Ajustar el espacio entre widgets
 texto2 = tk.Entry(marco_textos, font=("Arial", 16), fg='grey', bg='white')
-texto2.insert(0, "Introduzca su texto aquí")
+texto2.insert(0, "Back of the card")
 texto2.pack(pady=10) # Ajustar el espacio entre widgets
 
 # Función para borrar el texto de fondo al hacer clic
-def borrar_texto1(event):
+def borrar_texto1(event):  
+     
     if texto1.get() == "Front of the card":
         texto1.delete(0, "end")
         texto1.config(fg='black')
 def borrar_texto2(event):       
-    if texto2.get() == "Back or solution of the card":
+    if texto2.get() == "Back of the card":
         texto2.delete(0, "end")
         texto2.config(fg='black')
 # Asociar la función con el evento clic en el Entry
