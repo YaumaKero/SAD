@@ -25,13 +25,15 @@ class Card:
     #set el orden de aparicion de las cartas a random
     def shuffle(self):
         random.shuffle(self.cards)
+        
+        
     #boton Fail, aumenta prioridad en 1
     def fail(self):
-        self.priority += 1
+        self.priority -= 1
     #boton Good, reduce prioridad en -1
     def good(self):
         if self.priority > 1:
-            self.priority -= 1
+            self.priority += 1
     #boton Remove, elimina la carta del deck
     def remove(self):
         self.cards.remove(self)
