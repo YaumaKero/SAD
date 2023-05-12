@@ -27,11 +27,11 @@ marco_filas.pack(pady=10)
 
 mazos = ["Mazo 1", "Mazo 2"]
 marcos_filas = []
+botones_eliminar = [] # Lista para almacenar los botones de eliminación de cada mazo
 
 
 #bucle que cree tantas filas como mazos haya
-for i in range(len(mazos)):
-    #crear marco para cada fila
+for i, mazo in enumerate(mazos):    #crear marco para cada fila
     marco_filas = tk.Frame(marco_general)
     marco_filas.pack(pady=10)
     marcos_filas.append(marco_filas)
@@ -45,6 +45,8 @@ for i in range(len(mazos)):
     boton2.pack(side=tk.LEFT, padx=10) # Ajustar el espacio entre widgets
     boton3 = tk.Button(marco_filas, text="X", font=("Arial", 16))
     boton3.pack(side=tk.LEFT, padx=10) # Ajustar el espacio entre widgets
+    botones_eliminar.append(boton3)
+
 
 #crear boton para añadir mazo justo debajo de los nombres de los mazos
 boton4 = tk.Button(marco_general, text="Add deck", font=("Arial", 16))
@@ -52,8 +54,9 @@ boton4.pack(side=tk.BOTTOM, anchor=tk.SW, padx=10, pady=10) # Ajustar el espacio
 
 def añadirMazoaLista(event): 
     i = len(mazos)   
+    #cuadro de texto para añadir el nombre del mazo
+    texto1 = tk.Label(marco_general, text="Nombre del mazo: ", font=("Arial", 16))   
     mazos.append("mazo "+str(i+1))
-    print(list(mazos))
     # crear un nuevo marco para el mazo añadido
     nuevo_marco = tk.Frame(marco_general)
     nuevo_marco.pack(pady=10)
@@ -67,9 +70,51 @@ def añadirMazoaLista(event):
     boton2.pack(side=tk.LEFT, padx=10)
     boton3 = tk.Button(nuevo_marco, text="X", font=("Arial", 16))
     boton3.pack(side=tk.LEFT, padx=10)
+    botones_eliminar.append(boton3)
+    boton_eliminar = nuevo_marco.children['!button3']
+    boton_eliminar.bind("<Button-1>", eliminarWidget)
     ventana.update()
 boton4.bind("<Button-1>", añadirMazoaLista)
+
+# Vincular la función eliminarWidget al evento del botón de eliminación de todos los mazos
+def eliminarWidget(event):
+    # Obtener el índice del marco que contiene el botón de eliminación que fue presionado
+    index = marcos_filas.index(event.widget.master)
+    # Eliminar el marco del mazo completo
+    marcos_filas[index].destroy()
+    # Eliminar el mazo de la lista de mazos
+    del mazos[index]
+    event.widget.master.destroy()
+for marco in marcos_filas:
+    boton_eliminar = marco.children['!button3'] # Obtener el botón de eliminación del mazo
+    boton_eliminar.bind("<Button-1>", eliminarWidget)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # Iniciar el ciclo principal de eventos
 ventana.mainloop()
+
