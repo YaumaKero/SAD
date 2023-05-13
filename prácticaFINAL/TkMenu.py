@@ -36,11 +36,17 @@ def exec(mazos:List[Deck]):
         borrar_textos()
 
     def borrar_mazo():
-        listbox.delete(listbox.curselection())
-        listbox.config(height=listbox.size())
-        for mazo in mazos:
-            if mazo.name==listbox.get(listbox.curselection()):
-                mazos.remove(mazo)
+        selection = listbox.curselection()
+        if selection:
+            index = selection[0]
+            mazo_name = listbox.get(index)
+            listbox.delete(index)
+            listbox.config(height=listbox.size())
+            for i, mazo in enumerate(mazos):
+                if mazo.name == mazo_name:
+                    mazos.pop(i)
+                    break
+
 
     def anadir_cartas():
         for mazo in mazos:
