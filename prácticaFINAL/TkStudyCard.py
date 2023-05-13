@@ -51,15 +51,27 @@ def exec(deck):
     def fail():
         deck.cards[deck.current_card].fail()
         deck.current_card = deck.current_card + 1
+        
+        if deck.current_card<len(deck.cards):
+            texto1.configure(state='normal')
+            texto1.delete(0, "end")
+            texto1.insert(0, deck.cards[deck.current_card].front)
+            texto1.configure(state='readonly')
 
-        texto1.configure(state='normal')
-        texto1.delete(0, "end")
-        texto1.insert(0, deck.cards[deck.current_card].front)
-        texto1.configure(state='readonly')
+            texto2.configure(state='normal')
+            texto2.delete(0, "end")
+            texto2.insert(0, "Tap to see the back...")
 
-        texto2.configure(state='normal')
-        texto2.delete(0, "end")
-        texto2.insert(0, "Tap to see the back...")
+        else:
+            texto1.configure(state='normal')
+            texto1.delete(0, "end")
+            texto1.insert(0, "¡Enhorabuena!")
+            texto1.configure(state='readonly')
+
+            texto2.configure(state='normal')
+            texto2.delete(0, "end")
+            texto2.insert(0, "Completaste el estudio de este mazo.")
+            texto2.configure(state='readonly')
 
     def good():
         deck.cards[deck.current_card].good()
