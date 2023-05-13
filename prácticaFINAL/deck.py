@@ -15,7 +15,9 @@ class Deck:
         self.cards.remove(card)
     
     def shuffle(self):
-        random.shuffle(self.cards)
+        #barajar cartas del mazo para cada prioridad
+        random.shuffle(self.cards)     
+        
     
     def sort(self):
         self.cards.sort(key=lambda card: (card.priority, card.front))

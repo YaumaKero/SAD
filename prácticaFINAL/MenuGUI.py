@@ -1,7 +1,8 @@
 from typing import List
 import tkinter as tk
 from deck import Deck
-import addCardGUI
+import AddCardGUI
+import StudyCardGUI
 #ventana con 4 columnas, la primera el nombre del mazo, la segunda tercera y cuarta botones de añadir carta, estudiar y eliminar mazo
 
 def exec(mazos:List[Deck]):
@@ -20,8 +21,9 @@ def exec(mazos:List[Deck]):
     ventana.geometry(f"600x400+{x}+{y}")
     ventana.title("App Flashcards")
 
-    listbox = tk.Listbox(ventana)
-    listbox.pack()
+    #lista que ocupada 50% de la ventana centra
+    listbox = tk.Listbox(ventana,font=("Arial", 16))
+    listbox.pack(side=tk.LEFT, padx=40, pady=10)
     i=1
     for mazo in mazos:
         i=i+1
@@ -31,6 +33,7 @@ def exec(mazos:List[Deck]):
         listbox.insert(listbox.size(),entry_box.get())
         listbox.config(height=listbox.size())
         mazos.append(Deck(entry_box.get()))
+        borrar_textos()
 
     def borrar_mazo():
         listbox.delete(listbox.curselection())
@@ -42,20 +45,42 @@ def exec(mazos:List[Deck]):
     def anadir_cartas():
         for mazo in mazos:
             if mazo.name==listbox.get(listbox.curselection()):
-                addCardGUI.exec(mazo)
+                AddCardGUI.AddCardGUI(mazo)
+
+    def study():
+        for mazo in mazos:
+            if mazo.name==listbox.get(listbox.curselection()):
+                StudyCardGUI.exec(mazo)
 
     listbox.config(height=listbox.size())
 
-    crear_button = tk.Button(ventana,text="Añadir mazo",command=nuevo_mazo)
+    #crear marco para meter btotones de añadir carta, borrar mazo
+    marco_botones = tk.Frame(ventana)
+    marco_addDeck = tk.Frame(ventana)
+    marco_botones.pack(side=tk.TOP, padx=40, pady=60)
+    marco_addDeck.pack(side=tk.BOTTOM, padx=40, pady=50)
+
+    crear_button = tk.Button(marco_addDeck,text="Añadir mazo",command=nuevo_mazo,font=("Arial", 16))
+    crear_button.pack(side=tk.BOTTOM, padx=40, pady=10)
+
+    entry_box=tk.Entry(marco_addDeck,font=("Arial", 16))
+    entry_box.pack(side=tk.BOTTOM, padx=40)
+
+    crear_button = tk.Button(marco_botones,text="Borrar",command=borrar_mazo,font=("Arial", 16))
     crear_button.pack()
 
-    crear_button = tk.Button(ventana,text="Borrar",command=borrar_mazo)
+    crear_button = tk.Button(marco_botones,text="Study",command=study,font=("Arial", 16))
     crear_button.pack()
 
-    crear_button = tk.Button(ventana,text="Añadir cartas",command=anadir_cartas)
+    crear_button = tk.Button(marco_botones,text="Añadir cartas",command=anadir_cartas, font=("Arial", 16))
     crear_button.pack()
 
-    entry_box=tk.Entry(ventana)
-    entry_box.pack()
+    def borrar_textos():
+        entry_box.delete(0, tk.END)
+
+
+    
 
     ventana.mainloop()
+    
+exec([Deck("mazo1"),Deck("mazo2")] )
