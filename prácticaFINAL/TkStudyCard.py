@@ -92,13 +92,34 @@ def exec(deck):
     boton5 = tk.Button(marco_botones2, text="Good", font=("Arial", 16), command=good)
     boton5.pack(side=tk.LEFT, padx=10) # Ajustar el espacio entre widgets
 
+    def delete_card():
+            deck.cards.remove(deck.cards[deck.current_card])
+            if deck.current_card<len(deck.cards):
+                texto1.configure(state='normal')
+                texto1.delete(0, "end")
+                texto1.insert(0, deck.cards[deck.current_card].front)
+                texto1.configure(state='readonly')
+
+                texto2.configure(state='normal')
+                texto2.delete(0, "end")
+                texto2.insert(0, "Tap to see the back...")
+            else:
+                texto1.configure(state='normal')
+                texto1.delete(0, "end")
+                texto1.insert(0, "¡Enhorabuena!")
+                texto1.configure(state='readonly')
+
+                texto2.configure(state='normal')
+                texto2.delete(0, "end")
+                texto2.insert(0, "Completaste el estudio de este mazo.")
+                texto2.configure(state='readonly')
 
     #crear boton un poco mas abajo a la izquierda para eliminar carta
-    boton6 = tk.Button(ventana, text="X", font=("Arial", 16))
+    boton6 = tk.Button(ventana, text="Delete", font=("Arial", 16), command=delete_card)
     boton6.pack(side=tk.LEFT, padx=10) # Ajustar el espacio entre widgets
     
-    def delete_card():
-        pass
+    
+        
 
     
         
