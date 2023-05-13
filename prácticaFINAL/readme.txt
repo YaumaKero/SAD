@@ -5,3 +5,5 @@ FLASHCARD MANAGER APP using Python
 -Automatic deck with input reader and auto prio deliver
 -Graphic menu for decks
 generate linkcode para compartir mazos
+
+Version de prueba
