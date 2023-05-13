@@ -4,9 +4,8 @@ import deck
 #ventana con 3 botones superiores, 2 barras de Front y Back, back escondida, y 3 botones inferiores de eliminar carta, aumentar prio y reducir prio
 
 def exec(deck):
-
     deck.sort()
-
+    current_card = 0
     # Crear la ventana principal
     ventana = tk.Tk()
 
@@ -23,18 +22,28 @@ def exec(deck):
     ventana.title("App Flashcards")
 
     
-
     # Crear el marco para los textos
     marco_textos = tk.Frame(ventana)
-    marco_textos.pack(pady=10)
+    marco_textos.pack(pady=40)
 
     # Crear los campos de entrada de texto
-    texto1 = tk.Entry(marco_textos, font=("Arial", 16), fg='grey', bg='white')
-    texto1.insert(0, deck.cards[0].front)
+    texto1 = tk.Entry(marco_textos, font=("Arial", 16),fg='black', bg='white')
+    texto1.insert(0, deck.cards[current_card].front)
+    texto1.configure(state='readonly')
     texto1.pack(pady=10) # Ajustar el espacio entre widgets
     texto2 = tk.Entry(marco_textos, font=("Arial", 16), fg='grey', bg='white')
-    texto2.insert(0, "Back of the card")
+    texto2.insert(0, "Tap to see the back...")
     texto2.pack(pady=10) # Ajustar el espacio entre widgets
+
+    # Función para borrar el texto de fondo al hacer clic
+    def showback(event):       
+        if texto2.get() == "Tap to see the back...":
+            texto2.delete(0, "end")
+            texto2.insert(0, deck.cards[current_card].back)
+            texto2.config(fg='black', state='readonly')
+    # Asociar la función con el evento clic en el Entry
+    texto2.bind("<Button-1>", showback)
+
     
     #crear marco para los botones de Fail y Good
     marco_botones2 = tk.Frame(ventana)
@@ -60,9 +69,7 @@ def exec(deck):
     boton6.pack(side=tk.LEFT, padx=10) # Ajustar el espacio entre widgets
     
     def delete_card():
-        texto2.delete(0, tk.END)
-        
-    texto2.bind("<Button-1>", delete_card)
+        pass
 
     
         
