@@ -7,3 +7,5 @@ FLASHCARD MANAGER APP using Python
 generate linkcode para compartir mazos
 
 Version de prueba
+
+Version de prueba por Dani
