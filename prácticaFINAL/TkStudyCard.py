@@ -51,7 +51,7 @@ def exec(deck):
     def fail():
         deck.cards[deck.current_card].fail()
         deck.current_card = deck.current_card + 1
-        
+
         if deck.current_card<len(deck.cards):
             texto1.configure(state='normal')
             texto1.delete(0, "end")
@@ -70,7 +70,7 @@ def exec(deck):
 
             texto2.configure(state='normal')
             texto2.delete(0, "end")
-            texto2.insert(0, "Completaste el estudio de este mazo.")
+            texto2.insert(0, "Completaste el estudio.")
             texto2.configure(state='readonly')
 
     def good():

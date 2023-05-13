@@ -1,0 +1,15 @@
+import openai
+
+def responseAI(pregunta:str):
+    openai.api_key = "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"
+    response = openai.Completion.create(
+        engine="text-davinci-002",
+        prompt="La capital de Alemania es Berlín. La capital de Francia es París. La capital de España es Madrid. La capital de Italia es Roma. La capital de Estados Unidos es Washington D.C. La capital de Canadá es Ottawa. La capital de Japón es Tokio. La capital de Australia es Canberra. La capital de Brasil es Brasilia. La capital de México es Ciudad de México. La capital de Reino Unido es Londres. La capital de China es Pekín. La capital de Rusia es Moscú. La capital de India es Nueva Delhi. La capital de Sudáfrica es Ciudad del Cabo. La capital de Argentina es Buenos Aires. La capital de Colombia es Bogotá. La capital de Perú es Lima. La capital de Chile es Santiago. La capital de Egipto es El Cairo.La capital de Canadá es Ottawa. La capital de México es Ciudad de México. La capital de Reino Unido es Londres. La capital de China es Pekín. La capital de Rusia es Moscú. La capital de India es Nueva Delhi. La capital de Sudáfrica es Ciudad del Cabo. La capital de Argentina es Buenos Aires. La capital de Colombia es Bogotá. La capital de Perú es Lima. La capital de Chile es Santiago. La capital de Egipto es El Cairo. La capital de Alemania es Berlín. La capital de Francia es París. La capital de España es Madrid. La capital de Italia es Roma. La capital de Estados Unidos es Washington D.C. La capital de Japón es Tokio. La capital de Australia es Canberra. La capital de Brasil es Brasilia.Hello en español significa Hola. Goodbye en español significa Adiós. Thank you en español significa Gracias. Yes en español significa Sí. No en español significa No. Please en español significa Por favor. Sorry en español significa Lo siento. Beautiful en español significa Hermoso/a. Friend en español significa Amigo/a. Family en español significa Familia. Love en español significa Amor. Food en español significa Comida. Water en español significa Agua. Home en español significa Hogar. Work en español significa Trabajo. School en español significa Escuela. Money en español significa Dinero. Time en español significa Tiempo. Health en español significa Salud. Cat en español significa Gato/a. Dog en español significa Perro/a. Book en español significa Libro. Music en español significa Música. Happy en español significa Feliz. Sad en español significa Triste. Sun en español significa Sol. Moon en español significa Luna. Tree en español significa Árbol. Flower en español significa Flor. Sky en español significa Cielo. Beach en español significa Playa. Mountain en español significa Montaña. City en español significa Ciudad. Car en español significa Coche/Auto. Bicycle en español significa Bicicleta. Train en español significa Tren. Plane en español significa Avión. Computer en español significa Computadora. Phone en español significa Teléfono."+pregunta,
+        max_tokens=10,
+        stop=None,
+        temperature=0.1,
+        n=1
+    )
+
+    respuesta_generada = response.choices[0].text.strip()
+    return respuesta_generada

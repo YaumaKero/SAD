@@ -1,5 +1,6 @@
 import tkinter as tk
 from deck import Deck
+import OpenAI_access as ai
 
 def exec(deck):   
 
@@ -50,6 +51,11 @@ def exec(deck):
     def borrar_textos():  
         texto1.delete(0, tk.END)
         texto2.delete(0, tk.END)
+    # Defino comandos para generar respuesta con IA
+    def generateAI(pregunta):
+        texto2.delete(0, tk.END)
+        texto2.insert(0, ai.responseAI(pregunta))
+
     # Crear el marco para los botones
     marco_botones = tk.Frame(ventana)
     marco_botones.pack(pady=10)
@@ -58,6 +64,8 @@ def exec(deck):
     boton1.pack(side=tk.LEFT, padx=10) # Ajustar el espacio entre widgets
     boton2 = tk.Button(marco_botones, text="Add", font=("Arial", 16), command=lambda:[deck.add_card(texto1.get(),texto2.get()),borrar_textos()])
     boton2.pack(side=tk.LEFT, padx=10) # Ajustar el espacio entre widgets
+    boton3 = tk.Button(marco_botones, text="AI Generate", font=("Arial", 16), command=lambda:[generateAI(texto1.get())])
+    boton3.pack(side=tk.LEFT, padx=10) # Ajustar el espacio entre widgets
 
 
     # Iniciar el ciclo principal de eventos

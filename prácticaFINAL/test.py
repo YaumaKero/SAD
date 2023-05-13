@@ -1,9 +1,8 @@
-import TkMenu
-from deck import Deck
+import OpenAI_access as ai
 
-decks = [Deck("miMazo"),Deck("tuMazo")]
-TkMenu.exec(decks)
-#print(deck.cards[0].get_front())
+pregunta = "cual es la capital de francia"
+
+print("La respuesta es:\n"+ai.generar_respuesta(pregunta))
 
 
 
