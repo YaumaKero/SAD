@@ -6,4 +6,4 @@ FLASHCARD MANAGER APP using Python
 -Graphic menu for decks
 generate linkcode para compartir mazos
 
-Version de prueba
+Version de prueba por Jaime
