@@ -5,6 +5,7 @@ class Deck:
     def __init__(self, name):
         self.cards = []
         self.name = name
+        self.currentcard = None
     
     def add_card(self, front: str, back: str):
         if front!="" and back!="":
