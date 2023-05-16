@@ -6,33 +6,30 @@ class Card:
         self.back = back
         self.priority = 10
 
-    #los gets----------------------------------------------------------------   
+    # Gets y sets 
     def get_front(self):
         return self.front
 
     def get_back(self):
         return self.back
-
-    #los sets----------------------------------------------------------------
+    
     def set_front(self, new_front):
         self.front = new_front
 
     def set_back(self, new_back):
         self.back = new_back
 
-    #Funciones en modo Study------------------------------------------------
-
-    #set el orden de aparicion de las cartas a random
+    # Mezclar tarjetas aleatoriamente
     def shuffle(self):
         random.shuffle(self.cards)
-    #boton Fail, aumenta prioridad en 1
+    # Incrementar prioridad al fallar
     def fail(self):
         if self.priority > 1:
             self.priority -= 1
-    #boton Good, reduce prioridad en -1
+    # Decrementar prioridad al acertar
     def good(self):
         self.priority += 1
-    #boton Remove, elimina la carta del deck
+    # Borrar tarjeta
     def remove(self):
         self.cards.remove(self)
 
